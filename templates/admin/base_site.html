@@ -1,9 +1,122 @@
 {% extends "admin/base.html" %}
+{% block title %}
+{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ 'Snerdy Music' }}{% endblock %}
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block extrastyle %}
+<style>
+html[data-theme="dark"] {
+    --primary:#000000;
+    --header-bg: #000000; /* admin header color */
+    --accent:#FF53A0FF; /* header site name color */
+    --body-bg: #262626FF; /* body color */
+    --darkened-bg:#000000; /* recent actions and odd row colors */
+    --header-color:#FF53A0FF; /* color of 'welcome' message in header */
+    --header-link-color:#FF53A0FF; /* color of section headers like 'Authentication' and 'Music' */
+    --selected-row:#FF53A0FF;
+    --border-color: #eeeeee;
+    --message-success-bg:#FF53A0FF;
+    --link-fg:#eeeeee;
+
+    a:hover {
+        color: #FF53A0FF; /* link hover effect color */
+    }
+
+    input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, .vTextField, textarea, #nav-filter{
+        color:#eeeeee;
+    }
+
+    .selector-chosen h2 {
+        background: #000000; /* color for module headers like "chosen permissions" for users*/
+    }
+
+    .button.default, input[type=submit].default, .submit-row input.default { /* save button */
+        border: 1px solid white;
+        font-weight: 400;
+        background: #FF53A0FF;
+    }
+
+    .button, input[type=submit], input[type=button], .submit-row input, a.button { /* other save buttons like "save and add another"*/
+        background: var(--body-bg);
+        border: 1px solid white;
+        color: var(--button-fg);
+    }
+
+    div.breadcrumbs {
+        background: var(--body-bg);
+        padding: 10px 40px;
+        border: none;
+        color: var(--breadcrumbs-fg);
+        text-align: left;
+    }
+
+    ul.messagelist li {
+        background: var(--message-success-bg) url(../img/icon-yes.svg) 40px 12px no-repeat;
+    }
+
+    #content-related .module h2 {
+        color: #FF53A0FF; /* recent actions list header */
+    }
+}
+
+html[data-theme="auto"] {
+    --primary:#000000;
+    --header-bg: #000000; /* admin header color */
+    --accent:#FF53A0FF; /* header site name color */
+    --body-bg: #262626FF; /* body color */
+    --darkened-bg:#000000; /* recent actions and odd row colors */
+    --header-color:#FF53A0FF; /* color of 'welcome' message in header */
+    --header-link-color:#FF53A0FF; /* color of section headers like 'Authentication' and 'Music' */
+    --selected-row:#FF53A0FF;
+    --border-color: #eeeeee;
+    --message-success-bg:#FF53A0FF;
+    --link-fg:#eeeeee;
+
+    a:hover {
+        color: #FF53A0FF; /* link hover effect color */
+    }
+
+    input[type=text], input[type=password], input[type=email], input[type=url], input[type=number], input[type=tel], textarea, .vTextField, textarea, #nav-filter{
+        color:#eeeeee;
+    }
+
+    .selector-chosen h2 {
+        background: #000000; /* color for module headers like "chosen permissions" for users*/
+    }
+
+    .button.default, input[type=submit].default, .submit-row input.default { /* save button */
+        border: 1px solid white;
+        font-weight: 400;
+        background: #FF53A0FF;
+    }
+
+    .button, input[type=submit], input[type=button], .submit-row input, a.button { /* other save buttons like "save and add another"*/
+        background: var(--body-bg);
+        border: 1px solid white;
+        color: var(--button-fg);
+    }
+
+    div.breadcrumbs {
+        background: var(--body-bg);
+        padding: 10px 40px;
+        border: none;
+        color: var(--breadcrumbs-fg);
+        text-align: left;
+    }
+
+    ul.messagelist li {
+        background: var(--message-success-bg) url(../img/icon-yes.svg) 40px 12px no-repeat;
+    }
+
+    #content-related .module h2 {
+        color: #FF53A0FF; /* recent actions list header */
+    }
+}
+
+</style>
+{% endblock %}
 
 {% block branding %}
-<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+<div id="site-name"><a href="{% url 'admin:index' %}">Snerdy Music</a></div>
 {% if user.is_anonymous %}
   {% include "admin/color_theme_toggle.html" %}
 {% endif %}
