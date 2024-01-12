@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 ROOT_URLCONF = 'django_music_backend.urls'
 
