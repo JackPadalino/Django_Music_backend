@@ -21,6 +21,7 @@ whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 gunicorn = "^21.2.0"
 boto3 = "^1.34.18"
 django-storages = "^1.14.2"
+python-dotenv = "^1.0.0"
 
 
 [build-system]
