@@ -68,7 +68,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'https://django-music-frontend.onrender.com/'
+    'https://django-music-frontend.onrender.com'
 ]
 
 ROOT_URLCONF = 'django_music_backend.urls'
