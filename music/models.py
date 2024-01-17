@@ -1,12 +1,12 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
 import datetime
 from django.utils import timezone
+from dotenv import load_dotenv
+load_dotenv()
+import boto3
 import os
 
 # Create your models here.
@@ -33,12 +33,15 @@ class Track(models.Model):
     upload_date = models.DateTimeField("date uploaded", auto_now_add=True)
 
     def __str__(self):
-        return f'{self.artist} - {self.title}'
+        return f'{self.artist} - {self.title}.mp3'
 
-
-# signal to handle file path deletion upon instance deletion
+# delete mp3 files and images for deleted track from AWS S3 bucket
 @receiver(post_delete, sender=Track)
-def delete_file_on_track_delete(sender, instance, **kwargs):
-    file_path = instance.file.path
-    if os.path.exists(file_path):
-        os.remove(file_path)
+def delete_track_from_s3_bucket(sender, instance, **kwargs):
+    aws_key_id = os.environ.get('DJANGO_MUSIC_AWS_ACCESS_KEY_ID')
+    aws_secret_key = os.environ.get('DJANGO_MUSIC_AWS_SECRET_ACCESS_KEY')
+    aws_bucket_name = os.environ.get('DJANGO_MUSIC_AWS_STORAGE_BUCKET_NAME')
+
+    client = boto3.client('s3', aws_access_key_id=aws_key_id, aws_secret_access_key=aws_secret_key)
+    client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.file}')
+    client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.album_cover}')
