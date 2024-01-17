@@ -38,11 +38,10 @@ class Track(models.Model):
 # delete mp3 files and images for deleted track from AWS S3 bucket
 @receiver(post_delete, sender=Track)
 def delete_track_from_s3_bucket(sender, instance, **kwargs):
-    aws_key_id = os.environ.get('DJANGO_MUSIC_AWS_ACCESS_KEY_ID')
-    aws_secret_key = os.environ.get('DJANGO_MUSIC_AWS_SECRET_ACCESS_KEY')
-    aws_bucket_name = os.environ.get('DJANGO_MUSIC_AWS_STORAGE_BUCKET_NAME')
-    print(aws_key_id,aws_secret_key,aws_bucket_name,instance.file,instance.album_cover)
+    aws_key_id = os.environ.get('DJANGO_AWS_ACCESS_KEY_ID')
+    aws_secret_key = os.environ.get('DJANGO_AWS_SECRET_ACCESS_KEY')
+    aws_bucket_name = os.environ.get('DJANGO_AWS_STORAGE_BUCKET_NAME')
 
-    # client = boto3.client('s3', aws_access_key_id=aws_key_id, aws_secret_access_key=aws_secret_key)
-    # client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.file}')
-    # client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.album_cover}')
+    client = boto3.client('s3', aws_access_key_id=aws_key_id, aws_secret_access_key=aws_secret_key)
+    client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.file}')
+    client.delete_object(Bucket=aws_bucket_name, Key=f'{instance.album_cover}')
